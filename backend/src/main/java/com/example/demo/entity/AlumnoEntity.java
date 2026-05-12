@@ -13,16 +13,17 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Entity
-@Table(name = "persona")
+@Table(name = "alumno")
 @Data // get y set  
 @NoArgsConstructor  //constructor vacio
 @AllArgsConstructor //constructor con args
 @Builder //encabezado de entity
-public class PersonaEntity {
+public class AlumnoEntity {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NonNull
 	private String nombre;
-
+	@NonNull
+	private String curso;
 }

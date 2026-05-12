@@ -1,19 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PersonaStore } from '../services/persona.store';
+import { AlumnoStore } from '../services/alumno.store';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog.component';
 
 
 @Component({
-  selector: 'app-persona-list',
+  selector: 'app-alumno-list',
   standalone: true,
   imports: [CommonModule, ConfirmDialogComponent],
-  templateUrl: './persona-list.component.html'
+  templateUrl: './alumno-list.component.html'
 })
 
-export class PersonaListComponent {
+export class AlumnoListComponent {
   
-  store = inject(PersonaStore);
+  store = inject(AlumnoStore);
   mostrarConfirm = false;
   idAEliminar: number | null = null;
 
@@ -21,12 +21,12 @@ export class PersonaListComponent {
     this.store.load();
   }
 
-  editar(persona: any) {
-    this.store.select(persona);
+  editar(alumno: any) {
+    this.store.select(alumno);
   }
 
   eliminar(id: number) {
-    if (confirm('¿Eliminar persona?')) {
+    if (confirm('¿Eliminar alumno?')) {
       this.store.delete(id);
     }
   }

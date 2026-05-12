@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.PersonaEntity;
-import com.example.demo.interfaces.IPersonaService;
+import com.example.demo.entity.AlumnoEntity;
+import com.example.demo.interfaces.IAlumnoService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200")
-@RequestMapping ("/api/v1/entities/personas") //http://localhost:8080//api/v1/entities/persona
-public class PersonaController {
+@RequestMapping ("/api/v1/entities/alumnos") //http://localhost:8080//api/v1/entities/persona
+public class AlumnoController {
 
 	@Autowired
-	private IPersonaService service;
+	private IAlumnoService service;
 	
 	@GetMapping
-	public ResponseEntity<?> readPersonas(){
+	public ResponseEntity<?> readAlumnos(){
 		try {
 			return ResponseEntity.ok(service.findAll());
 		} catch (Exception e) {
@@ -32,10 +32,10 @@ public class PersonaController {
 		}
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<?> readPersonabyId(@PathVariable Long id){
+	public ResponseEntity<?> readAlumnobyId(@PathVariable Long id){
 		try {
 			if(service.findById(id)== null) {
-				return ResponseEntity.status(404).body("Persona no encontrada. ID: "+ id +"\n");
+				return ResponseEntity.status(404).body("Alumno no encontrada. ID: "+ id +"\n");
 			} else
 			return ResponseEntity.ok(service.findById(id));
 		} catch (Exception e) {
@@ -43,22 +43,22 @@ public class PersonaController {
 		}
 	}
 	@PostMapping
-	public ResponseEntity<?> createPersona(@RequestBody PersonaEntity personaEntity){
+	public ResponseEntity<?> createAlumno(@RequestBody AlumnoEntity personaEntity){
 		try {
-			PersonaEntity nuevaPersona = service.save(personaEntity);
-			return ResponseEntity.ok().body(nuevaPersona);
+			AlumnoEntity nuevoAlumno = service.save(personaEntity);
+			return ResponseEntity.ok().body(nuevoAlumno);
 		} catch (Exception e) {
 			return ResponseEntity.status(404).body(e);
 		}
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updatePersona(@PathVariable Long id, @RequestBody PersonaEntity PersonaActualizada){
+	public ResponseEntity<?> updateAlumno(@PathVariable Long id, @RequestBody AlumnoEntity AlumnoActualizado){
 		try {
 			if (service.findById(id) == null) {
 				return ResponseEntity.status(404).body("Persona no encontrada para actualizar. ID: "+ id +"\n");
 			} else {
-				PersonaEntity personaGuardada = service.save(PersonaEntity.builder().nombre(PersonaActualizada.getNombre()).id(id).build());
-			    return ResponseEntity.ok().body(personaGuardada);
+				AlumnoEntity alumnoGuardado = service.save(AlumnoEntity.builder().nombre(AlumnoActualizado.getNombre()).id(id).build());
+			    return ResponseEntity.ok().body(alumnoGuardado);
 			}
 		} catch (Exception e) {
 			return ResponseEntity.status(404).body(e);
@@ -70,7 +70,7 @@ public class PersonaController {
 			service.deleteById(id);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
-			return ResponseEntity.status(500).body("Error al eliminar la persona. ID: "+ id + "\n");
+			return ResponseEntity.status(500).body("Error al eliminar al alumno. ID: "+ id + "\n");
 		}
 	}
 }

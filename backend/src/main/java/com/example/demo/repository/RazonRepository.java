@@ -2,10 +2,7 @@ package com.example.demo.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-import com.example.demo.entity.PersonaEntity;
+import com.example.demo.entity.RazonEntity;
 
 @Repository
-public interface PersonaRepository extends CrudRepository <PersonaEntity, Long> {
-
-}
+public interface RazonRepository extends CrudRepository <RazonEntity, Long> { }
