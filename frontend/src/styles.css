@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+/* Fondo general */
+body {
+  background-color: #f8f9fa;
+}
+
+/* Card estilo moderno */
+.card {
+  border-radius: 10px;
+}
+
+/* Inputs con error */
+input.ng-invalid.ng-touched {
+  border: 1px solid #dc3545;
+}
+
+/* Espaciado general */
+.container {
+  margin-top: 30px;
+}
