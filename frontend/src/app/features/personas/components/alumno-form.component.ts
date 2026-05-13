@@ -1,6 +1,6 @@
-import { Component, inject, effect } from '@angular/core';
+import { Component, inject, effect, ChangeDetectorRef } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // Agregado para estabilidad
+import { CommonModule } from '@angular/common';
 import { AlumnoStore } from '../services/alumno.store';
 
 @Component({
@@ -12,6 +12,7 @@ import { AlumnoStore } from '../services/alumno.store';
 export class AlumnoFormComponent {
   private fb = inject(FormBuilder);
   private _store = inject(AlumnoStore);
+  private cd = inject(ChangeDetectorRef); // Inyectado para forzar la detección si es necesario
 
   get store() { return this._store; }
 
@@ -19,32 +20,53 @@ export class AlumnoFormComponent {
     id: [0],
     nombre: ['', Validators.required],
     curso: ['', Validators.required],
-    protocolo_id: ['', Validators.required] 
+    protocoloId: ['', Validators.required] // <--- CAMBIADO: Coincide con el HTML
   });
 
   constructor() {
     effect(() => {
       const alumno = this.store.selected();
       if (alumno) {
-        this.form.patchValue(alumno);
+        // Usamos patchValue de forma segura
+        this.form.patchValue({
+          id: alumno.id,
+          nombre: alumno.nombre,
+          curso: alumno.curso,
+          protocoloId: alumno.protocoloId // Mapeas el dato de la DB al nombre del control
+        });
+        
+        // Esto le dice a Angular que revise los cambios en el siguiente ciclo
+        // evitando el error ExpressionChangedAfterItHasBeenChecked
+        this.cd.detectChanges(); 
       }
     });
   }
 
   guardar() {
     if (this.form.invalid) return;
-    const alumno = this.form.value;
+    
+    // Obtenemos los valores y nos aseguramos de que el nombre sea el que espera el backend
+    const rawValue = this.form.value;
+    const alumnoParaGuardar = {
+      ...rawValue,
+      protocolo_id: rawValue.protocoloId // Mapeas de vuelta antes de enviar al store
+    };
 
-    if (alumno.id) {
-      this.store.update(alumno as any);
+    if (alumnoParaGuardar.id) {
+      this.store.update(alumnoParaGuardar as any);
     } else {
-      this.store.add(alumno as any);
+      this.store.add(alumnoParaGuardar as any);
     }
-    this.form.reset({ id: 0, nombre: '', curso: '', protocolo_id: '' });
+    
+    this.limpiar();
   }
 
   cancelar() {
     this.store.clearSelection();
-    this.form.reset({ id: 0, nombre: '', curso: '', protocolo_id: '' });
+    this.limpiar();
+  }
+
+  private limpiar() {
+    this.form.reset({ id: 0, nombre: '', curso: '', protocoloId: '' });
   }
 }
