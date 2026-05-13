@@ -11,11 +11,13 @@
            placeholder="Ej: 3ro Básico A">
   </div>
 
-  <div class="mb-3">
-    <label class="form-label fw-bold">ID de Protocolo TEA</label>
-    <input type="text" formControlName="protocolo_id" class="form-control" 
-           placeholder="Código de procedimiento (ej: P-001)">
-  </div>
+<div class="mb-3">
+  <label class="form-label fw-bold">ID de Protocolo TEA</label>
+  <input type="text" 
+         class="form-control" 
+         formControlName="protocoloId" 
+         placeholder="Código de procedimiento (ej: P-001)">
+</div>
 
   <div class="d-grid gap-2">
     <button type="submit" [disabled]="form.invalid" class="btn btn-primary shadow-sm">
