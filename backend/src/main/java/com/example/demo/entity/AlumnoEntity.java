@@ -1,10 +1,6 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +22,7 @@ public class AlumnoEntity {
 	private String nombre;
 	@NonNull
 	private String curso;
+	@Column(name = "protocolo_id")
+	private String protocoloId; 
+
 }

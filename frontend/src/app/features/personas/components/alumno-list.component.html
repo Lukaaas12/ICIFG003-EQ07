@@ -1,0 +1,31 @@
+<table class="table table-hover align-middle">
+  <thead class="table-dark">
+    <tr>
+      <th>Estudiante</th>
+      <th>Curso</th>
+      <th class="text-center">Protocolo ID</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (estudiante of store.alumnos(); track estudiante.id) {
+      <tr>
+        <td class="fw-bold">{{ estudiante.nombre }}</td>
+        <td>{{ estudiante.curso }}</td>
+        <td class="text-center">
+          <span class="badge rounded-pill bg-info text-dark shadow-sm">
+            #{{ estudiante.protocolo_id || 'SIN ASIGNAR' }}
+          </span>
+        </td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-outline-primary me-2" (click)="editar(estudiante)">
+            <i class="bi bi-pencil"></i> Ver detalle
+          </button>
+          <button class="btn btn-sm btn-outline-danger" (click)="eliminar(estudiante.id)">
+            <i class="bi bi-x-circle"></i> Cerrar
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

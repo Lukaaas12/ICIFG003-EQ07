@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Alumno } from '../models/alumno.model'; // ⚠️ Recuerda renombrar tu archivo de modelo
@@ -10,6 +10,8 @@ import { environment } from '../../../../../environments/environment';
 export class AlumnoService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}`; // Asegúrate de que en environment.ts apunte a /api/v1/entities/alumnos
+  
+  usuarioActual = signal<string | null>(localStorage.getItem('username') || 'Usuario');
   
   getAll(): Observable<Alumno[]> {
     return this.http.get<Alumno[]>(this.apiUrl);

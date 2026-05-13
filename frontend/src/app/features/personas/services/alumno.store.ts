@@ -14,6 +14,10 @@ export class AlumnoStore {
   selected = signal<Alumno | null>(null);
   success = signal<string | null>(null);
 
+  // 🔑 LA PIEZA FALTANTE:
+  // Intenta sacar el nombre del localStorage; si no hay nada, pone 'Usuario' por defecto.
+  usuarioActual = signal<string | null>(localStorage.getItem('username') || 'Usuario');
+
   load() {
     this.loading.set(true);
     this.service.getAll().subscribe({
@@ -28,6 +32,8 @@ export class AlumnoStore {
     });
   }
 
+  // ... (el resto de tus métodos select, add, update, delete se mantienen igual)
+  
   select(alumno: Alumno) {
     this.selected.set(alumno);
   }
@@ -42,6 +48,11 @@ export class AlumnoStore {
         this.alumnos.update((list: Alumno[]) => [...list, p]);
         this.success.set('Alumno guardado correctamente');
         setTimeout(() => this.success.set(null), 3000);
+      },
+      error: (err) => {
+        console.error('ERROR AL GUARDAR:', err);
+        this.error.set('No se pudo guardar el alumno. Revisa la conexión con el backend.');
+        setTimeout(() => this.error.set(null), 5000);
       }
     });
   }

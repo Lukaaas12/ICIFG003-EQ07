@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="guardar()">
+  <div class="mb-3">
+    <label class="form-label fw-bold">Nombre del Estudiante</label>
+    <input type="text" formControlName="nombre" class="form-control" 
+           placeholder="Nombre completo">
+  </div>
+  
+  <div class="mb-3">
+    <label class="form-label fw-bold">Curso / Nivel</label>
+    <input type="text" formControlName="curso" class="form-control" 
+           placeholder="Ej: 3ro Básico A">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label fw-bold">ID de Protocolo TEA</label>
+    <input type="text" formControlName="protocolo_id" class="form-control" 
+           placeholder="Código de procedimiento (ej: P-001)">
+  </div>
+
+  <div class="d-grid gap-2">
+    <button type="submit" [disabled]="form.invalid" class="btn btn-primary shadow-sm">
+      {{ form.value.id ? 'Actualizar Protocolo' : 'Registrar en Bitácora' }}
+    </button>
+    
+    @if (store.selected()) {
+      <button type="button" (click)="cancelar()" class="btn btn-outline-secondary btn-sm">
+        Cancelar Edición
+      </button>
+    }
+  </div>
+</form>

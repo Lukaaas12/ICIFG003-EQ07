@@ -1,0 +1,42 @@
+<div class="vw-100 vh-100 d-flex justify-content-center align-items-center bg-light">
+  <div class="card p-4 shadow-lg" style="width: 28rem; border-radius: 15px;">
+    
+    <div class="text-center mb-4">
+      <h3 class="fw-bold">Crear Cuenta</h3>
+      <p class="text-muted">Ingresa los datos del nuevo usuario</p>
+    </div>
+    
+    <form (ngSubmit)="registrar()">
+      <div class="mb-3">
+        <label class="form-label small fw-bold">Nombre de usuario</label>
+        <input type="text" name="username" class="form-control" 
+               placeholder="Ej: j.perez" [(ngModel)]="usuario.username" required>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label small fw-bold">Contraseña</label>
+        <input type="password" name="password" class="form-control" 
+               placeholder="••••••••" [(ngModel)]="usuario.password" required>
+      </div>
+      
+      <div class="mb-4">
+        <label class="form-label small fw-bold">Rol del sistema</label>
+        <select name="rol" class="form-select" [(ngModel)]="usuario.rol">
+          <option value="USER">Usuario (Consulta)</option>
+          <option value="ADMIN">Administrador (Gestión)</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="btn btn-success w-100 fw-bold py-2 shadow-sm">
+        Registrar Usuario
+      </button>
+    </form>
+    
+    <div class="text-center mt-4">
+      <a routerLink="/login" class="text-decoration-none small">
+        ¿Ya tienes cuenta? <span class="fw-bold">Inicia sesión</span>
+      </a>
+    </div>
+
+  </div>
+</div>

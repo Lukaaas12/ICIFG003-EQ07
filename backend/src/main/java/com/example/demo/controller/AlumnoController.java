@@ -16,8 +16,8 @@ import com.example.demo.entity.AlumnoEntity;
 import com.example.demo.interfaces.IAlumnoService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
 @RequestMapping ("/api/v1/entities/alumnos") //http://localhost:8080//api/v1/entities/persona
+@CrossOrigin(origins= "*")
 public class AlumnoController {
 
 	@Autowired
@@ -52,18 +52,20 @@ public class AlumnoController {
 		}
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateAlumno(@PathVariable Long id, @RequestBody AlumnoEntity AlumnoActualizado){
-		try {
-			if (service.findById(id) == null) {
-				return ResponseEntity.status(404).body("Persona no encontrada para actualizar. ID: "+ id +"\n");
-			} else {
-				AlumnoEntity alumnoGuardado = service.save(AlumnoEntity.builder().nombre(AlumnoActualizado.getNombre()).id(id).build());
-			    return ResponseEntity.ok().body(alumnoGuardado);
-			}
-		} catch (Exception e) {
-			return ResponseEntity.status(404).body(e);
-		}	
-	}
+    public ResponseEntity<?> updateAlumno(@PathVariable Long id, @RequestBody AlumnoEntity alumnoActualizado) {
+        try {
+            AlumnoEntity existente = service.findById(id);      
+            if (existente == null) {
+                return ResponseEntity.status(404).body("Alumno no encontrado. ID: " + id + "\n");
+            }
+            alumnoActualizado.setId(id);
+            AlumnoEntity alumnoGuardado = service.save(alumnoActualizado);
+            
+            return ResponseEntity.ok().body(alumnoGuardado);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error interno: " + e.getMessage());
+        }   
+    }
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id){
 		try{

@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="#">🧩 Gestión TEA - Colegio Marcela Paz</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/alumnos">Protocolos de Desregulación</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <span class="text-light me-3 small">Especialista: {{ store.usuarioActual() }}</span>
+        <button class="btn btn-outline-danger btn-sm" (click)="cerrarSesion()">Cerrar Sesión</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container pb-5">
+  <div class="row g-4">
+    <div class="col-md-5">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white fw-bold">
+          <i class="bi bi-clipboard-plus"></i> Registrar Protocolo de Desregulación
+        </div>
+        <div class="card-body">
+          <app-alumno-form></app-alumno-form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-danger text-white fw-bold">
+          <i class="bi bi-exclamation-triangle"></i> Bitácora de Estudiantes con Protocolo Activo
+        </div>
+        <div class="card-body">
+          <app-alumno-list></app-alumno-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
